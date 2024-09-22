@@ -1,30 +1,13 @@
-import CoursesNavigation from "./Navigation";
-import { Navigate, Route, Routes } from "react-router";
-export default function Courses() {
+import { Link } from "react-router-dom";
+export default function KanbasNavigation() {
   return (
-    <div id="wd-courses">
-      <h2>Course 1234</h2>
-      <hr />
-      <table>
-        <tr>
-          <td valign="top">
-            <CoursesNavigation />
-          </td>
-          <td valign="top">
-            <Routes>
-              <Route path="/" element={<Navigate to="Home" />} />
-              <Route path="Home" element={<h2>Home</h2>} />
-              <Route path="Modules" element={<h2>Modules</h2>} />
-              <Route path="Assignments" element={<h2>Assignments</h2>} />
-              <Route
-                path="Assignments/:aid"
-                element={<h2>Assignment Editor</h2>}
-              />
-              <Route path="People" element={<h2>People</h2>} />
-            </Routes>
-          </td>
-        </tr>
-      </table>
+    <div id="wd-kanbas-navigation">
+      <a href="https://www.northeastern.edu/" id="wd-neu-link" target="_blank">Northeastern</a><br/>
+      <Link to="/Kanbas/Account" id="wd-account-link">Account</Link><br/>
+      <Link to="/Kanbas/Dashboard" id="wd-dashboard-link">Dashboard</Link><br/>
+      <Link to="/Kanbas/Courses" id="wd-course-link">Courses</Link><br/>
+      <Link to="/Kanbas/Calendar" id="wd-calendar-link">Calendar</Link><br/>
+      <Link to="/Kanbas/Inbox" id="wd-inbox-link">Inbox</Link><br/>
+      <Link to="/Labs" id="wd-labs-link">Labs</Link><br/>
     </div>
-  );
-}
+);}
