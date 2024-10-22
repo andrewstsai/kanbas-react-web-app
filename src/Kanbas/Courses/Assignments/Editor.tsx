@@ -1,4 +1,12 @@
+import { useParams } from "react-router";
+import * as db from "../../Database";
+import { Link } from "react-router-dom";
+
 export default function AssignmentEditor() {
+  const { aid } = useParams();
+  const assignments = db.assignments;
+  console.log(aid);
+  const assignment = assignments.find((a) => a._id === aid);
   return (
     <div id="wd-assignments-editor">
       <div className="container mt-4">
@@ -10,21 +18,14 @@ export default function AssignmentEditor() {
           <input
             id="wd-name"
             className="form-control"
-            value="A1 - ENV + HTML"
+            value={assignment?.title ?? ""}
           />
         </div>
 
         {/* Description */}
         <div className="mb-4">
           <textarea id="wd-description" className="form-control" rows={13}>
-            {"\nThe assignment is available online.\n\n" +
-              "Submit a link to the landing page of your Web application running on Netlify.\n\n" +
-              "The landing page should include the following:\n" +
-              "• Your full name and section\n" +
-              "• Links to each of the lab assignments\n" +
-              "• Link to the Kanbas application\n" +
-              "• Links to all relevant source code repositories\n\n" +
-              "The Kanbas application should include a link to navigate back to the landing page."}
+            {assignment?.description ?? ""}
           </textarea>
         </div>
         {/* Form Fields */}
@@ -35,7 +36,11 @@ export default function AssignmentEditor() {
               <label htmlFor="wd-points">Points</label>
             </div>
             <div className="col-10">
-              <input id="wd-points" className="form-control" value={100} />
+              <input
+                id="wd-points"
+                className="form-control"
+                value={assignment?.points ?? "0"}
+              />
             </div>
           </div>
           {/* Assignment Group */}
@@ -157,7 +162,7 @@ export default function AssignmentEditor() {
                   type="date"
                   id="wd-due-date"
                   className="form-control"
-                  value="2024-05-13"
+                  value={assignment?.due ?? "0000-00-00"}
                 />
               </div>
               <div className="mb-3">
@@ -168,7 +173,7 @@ export default function AssignmentEditor() {
                   type="date"
                   id="wd-available-from"
                   className="form-control"
-                  value="2024-05-06"
+                  value={assignment?.from ?? "0000-00-00"}
                 />
               </div>
               <div className="mb-3">
@@ -179,14 +184,17 @@ export default function AssignmentEditor() {
                   type="date"
                   id="wd-available-until"
                   className="form-control"
-                  value="2024-05-20"
+                  value={assignment?.until ?? "0000-00-00"}
                 />
               </div>
             </div>
           </div>
         </div>
         {/* Buttons */}
-        <div className="d-flex float-end mt-4">
+        <Link
+          className="d-flex float-end mt-4"
+          to={`../Assignments`}
+        >
           <button
             id="wd-cancel"
             type="button"
@@ -197,7 +205,18 @@ export default function AssignmentEditor() {
           <button id="wd-save" type="button" className="btn btn-danger">
             Save
           </button>
-        </div>
+        </Link>
+        {/* <Link
+          key={link}
+          to={link}
+          id={`wd-course-${link}-link`}
+          className={`list-group-item border border-0
+              ${
+                pathname.includes(link) ? "text-black active " : "text-danger"
+              }`}
+        >
+          {link}
+        </Link> */}
       </div>
     </div>
   );
