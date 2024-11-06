@@ -1,5 +1,6 @@
 import { FaPlus } from "react-icons/fa6";
 import { HiOutlineMagnifyingGlass } from "react-icons/hi2";
+import { Link } from "react-router-dom";
 export default function AssignmentControls() {
   return (
     <div id="wd-assignments-controls" className="text-nowrap d-flex ">
@@ -27,16 +28,18 @@ export default function AssignmentControls() {
         </button>
       </div>
       <div className="ms-auto">
-        <button
-          id="wd-add-assignment"
-          className="btn btn-lg btn-danger me-1 float-end"
-        >
-          <FaPlus
-            className="position-relative me-2"
-            style={{ bottom: "1px" }}
-          />
-          Assignment
-        </button>
+        <Link to="new" className="text-decoration-none">
+          <button
+            id="wd-add-assignment"
+            className="btn btn-lg btn-danger me-1 float-end"
+          >
+            <FaPlus
+              className="position-relative me-2"
+              style={{ bottom: "1px" }}
+            />
+            Assignment
+          </button>
+        </Link>
       </div>
     </div>
   );

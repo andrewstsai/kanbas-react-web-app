@@ -4,16 +4,19 @@ import { MdArrowDropDown } from "react-icons/md";
 import { GoChecklist } from "react-icons/go";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import AssignmentControls from "./AssignmentControls";
-import { useParams } from "react-router";
+import { Route, Routes, useParams } from "react-router";
 import * as db from "../../Database";
+import { deleteAssignment } from "./reducer";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Assignments() {
   const { cid } = useParams();
-  const assignments = db.assignments;
-  console.log(cid);
+  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const dispatch = useDispatch();
   return (
     <div>
-      <AssignmentControls />
+      {currentUser.role === "FACULTY" && <AssignmentControls />}
       <br />
       <br />
       <br />
@@ -48,9 +51,16 @@ export default function Assignments() {
                       Due May 13 at 11:59pm | 100 pts
                     </div>
                   </div>
-                  <div className="ms-auto">
-                    <AssignmentControlButtons />
-                  </div>
+                  {currentUser.role === "FACULTY" && (
+                    <div className="ms-auto">
+                      <AssignmentControlButtons
+                        assignmentId={assignment._id}
+                        deleteAssignment={(assignmentId) => {
+                          dispatch(deleteAssignment(assignmentId));
+                        }}
+                      />
+                    </div>
+                  )}
                 </li>
               ))}
           </ul>
