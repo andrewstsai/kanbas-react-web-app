@@ -3,20 +3,21 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addAssignment, updateAssignment } from "./reducer";
 import { useState } from "react";
+import * as assignmentsClient from "./client";
+import * as coursesClient from "../client";
 
 export default function AssignmentEditor() {
   const { pathname } = useLocation();
-  const { aid } = useParams();
+  const { aid, cid } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isNewAssignment = pathname.endsWith("new");
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
-  const newId = new Date().getTime().toString();
   const assignment = isNewAssignment
     ? {
-        _id: newId,
+        _id: new Date().getTime().toString(),
         title: "",
-        course: pathname.split("/")[3],
+        course: cid,
         description: "",
         points: "",
         dueDate: new Date(),
@@ -24,6 +25,28 @@ export default function AssignmentEditor() {
         availableUntil: new Date(),
       }
     : assignments.find((a: any) => a._id === aid);
+  const saveAssignment = async (assignment: any) => {
+    await assignmentsClient.updateAssignment(assignment);
+    dispatch(updateAssignment(assignment));
+  };
+  const createAssignmentForCourse = async () => {
+    if (!cid) return;
+    const newAssignment = {
+      ...assignment,
+      title: title,
+      description: description,
+      points: points,
+      dueDate: dueDate,
+      availableFrom: availableFrom,
+      availableUntil: availableUntil,
+    };
+    const assignmentResponse = await coursesClient.createAssignmentForCourse(
+      cid,
+      newAssignment
+    );
+    dispatch(addAssignment(assignmentResponse));
+  };
+
   const [title, setTitle] = useState(assignment.title);
   const [description, setDescription] = useState(assignment.description);
   const [points, setPoints] = useState(assignment.points);
@@ -33,35 +56,22 @@ export default function AssignmentEditor() {
     assignment.availableUntil
   );
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (isNewAssignment) {
-      console.log(title);
-      dispatch(
-        addAssignment({
-          ...assignment,
-          title: title,
-          description: description,
-          points: points,
-          dueDate: dueDate,
-          availableFrom: availableFrom,
-          availableUntil: availableUntil,
-        })
-      );
-      console.log(assignments.find((a: any) => a.title === title));
+      await createAssignmentForCourse();
+      navigate("../Assignments");
     } else {
-      dispatch(
-        updateAssignment({
-          ...assignment,
-          title: title,
-          description: description,
-          points: points,
-          dueDate: dueDate,
-          availableFrom: availableFrom,
-          availableUntil: availableUntil,
-        })
-      );
+      await saveAssignment({
+        ...assignment,
+        title: title,
+        description: description,
+        points: points,
+        dueDate: dueDate,
+        availableFrom: availableFrom,
+        availableUntil: availableUntil,
+      });
+      navigate("../Assignments");
     }
-    navigate("../Assignments");
   };
 
   const handleCancel = () => {

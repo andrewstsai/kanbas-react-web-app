@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -21,6 +17,12 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
+    "src",
+    "src/Kanbas/Database/assignments.js",
+    "src/Kanbas/Database/courses.js",
+    "src/Kanbas/Database/enrollments.js",
+    "src/Kanbas/Database/modules.js",
+    "src/Kanbas/Database/users.js",
+    "../kanbas-node-server-app/Kanbas/Users"
   ]
 }
