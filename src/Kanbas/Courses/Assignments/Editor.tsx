@@ -77,7 +77,7 @@ export default function AssignmentEditor() {
   const handleCancel = () => {
     navigate("../Assignments");
   };
-
+  console.log(assignment);
   return (
     <div id="wd-assignments-editor">
       <div className="container mt-4">
@@ -135,7 +135,8 @@ export default function AssignmentEditor() {
                   id="wd-due-date"
                   className="form-control"
                   defaultValue={
-                    assignment?.dueDate?.toISOString().split("T")[0] || ""
+                    // assignment?.dueDate?.toISOString().split("T")[0] || ""
+                    assignment?.dueDate || ""
                   }
                   onChange={(e) => setDueDate(new Date(e.target.value))}
                 />
@@ -149,7 +150,8 @@ export default function AssignmentEditor() {
                   id="wd-available-from"
                   className="form-control"
                   defaultValue={
-                    assignment?.availableFrom?.toISOString().split("T")[0] || ""
+                    // assignment?.availableFrom?.toISOString().split("T")[0] || ""
+                    assignment?.availableFrom || ""
                   }
                   onChange={(e) => setAvailableFrom(new Date(e.target.value))}
                 />
@@ -163,8 +165,9 @@ export default function AssignmentEditor() {
                   id="wd-available-until"
                   className="form-control"
                   defaultValue={
-                    assignment?.availableUntil?.toISOString().split("T")[0] ||
-                    ""
+                    // assignment?.availableUntil?.toISOString().split("T")[0] ||
+                    // ""
+                    assignment?.availableUntil || ""
                   }
                   onChange={(e) => setAvailableUntil(new Date(e.target.value))}
                 />
