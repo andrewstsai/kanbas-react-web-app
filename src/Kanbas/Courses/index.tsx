@@ -1,5 +1,5 @@
 import CoursesNavigation from "./Navigation";
-import { Navigate, Route, Routes, useParams, useLocation } from "react-router";
+import { Route, Routes, useParams, useLocation } from "react-router";
 import Modules from "./Modules";
 import Home from "./Home";
 import Assignments from "./Assignments";
@@ -9,6 +9,13 @@ import PeopleTable from "./People/Table";
 import * as coursesClient from "./client";
 import { useEffect } from "react";
 import { useState } from "react";
+import Quizzes from "./Quizzes";
+import QuizDetails from "./Quizzes/Details";
+import TakeQuiz from "./Quizzes/Attempts/TakeQuiz";
+import DetailsEditor from "./Quizzes/DetailsEditor";
+import QuestionsEditor from "./Quizzes/Questions/QuestionsEditor";
+import Questions from "./Quizzes/Questions";
+import ViewQuiz from "./Quizzes/Attempts/ViewQuiz";
 export default function Courses({ courses }: { courses: any[] }) {
   const { cid } = useParams();
   const { pathname } = useLocation();
@@ -30,7 +37,7 @@ export default function Courses({ courses }: { courses: any[] }) {
   useEffect(() => {
     fetchPeople();
   }, []);
-  
+
   return (
     <div id="wd-courses">
       <h2 className="text-danger">
@@ -48,8 +55,20 @@ export default function Courses({ courses }: { courses: any[] }) {
             <Route path="Modules" element={<Modules />} />
             <Route path="Assignments" element={<Assignments />} />
             <Route path="Assignments/:aid" element={<AssignmentEditor />} />
-            {/* <Route path="People" element={<PeopleTable />} /> */}
             <Route path="People" element={<PeopleTable users={users} />} />
+            <Route path="Quizzes" element={<Quizzes />} />
+            <Route path="Quizzes/Details/:qid" element={<QuizDetails />} />
+            <Route
+              path="Quizzes/DetailsEditor/:qid"
+              element={<DetailsEditor />}
+            />
+            <Route path="Quizzes/Questions/:qid" element={<Questions />} />
+            <Route path="Quizzes/TakeQuiz/:qid" element={<TakeQuiz />} />
+            <Route path="Quizzes/ViewQuiz/:qid" element={<ViewQuiz />} />
+            <Route
+              path="Quizzes/Questions/:qid/:quesid"
+              element={<QuestionsEditor />}
+            />
           </Routes>
         </div>
       </div>

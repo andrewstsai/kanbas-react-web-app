@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import * as userClient from "./Account/client";
 export default function Dashboard({
   courses,
   course,
